@@ -30,7 +30,7 @@ ele traduz para o formato que queremos de acordo com nossos padroes de escrita, 
 Brasil, para assim ter uma função callback de erro e 'acerto', que no caso podemos dar o nome que quisermos, tendo
 em mente que o 'texto' é a constante que armazenará o resultado se acaso for um sucesso e finalmente partindo para a
 arrow function que atribuirá por estar dentro de parenteses um objeto ao inves de um bloco de codigo,
-que se de forma correta o objeto retorna 'sozinho' uma 'lista' tal qual a propria estrutura de um array sem necessidade
+que se de forma correta o objeto retorna 'sozinho' uma 'lista' tal qual a propria estrutura de uma lista sem necessidade
 de usarmos o return, coisa que seria OBRIGATORIO quando falamos de bloco de codigo que também utilizamos as chaves
 assim como no objeto.
 
@@ -69,13 +69,31 @@ onde src/index.js é o caminho do arquivo que queremos executar e arquivos/texto
 fs.readFile (link, 'UTF-8', (erro, texto) =>{
     verificarPalavras (texto);
 })
+
+function quebraParagrafos(texto) {
+    const paragrafos = texto.toLowerCase().split ('\n');
+    //toLowerCase() transforma o texto em minuscula
+    //split('\n') recebe as quebras de texto em paragrafos
+    const contagem = paragrafos.map((paragrafo) => {
+        return verificarPalavras(paragrafo);
+    })
+    //map() recebe um array e transforma em um novo array
+    /*return pega o valor de verificarPalavras através do parametro (paragrafo)
+    e joga para o paragrafo do map que é o nome do novo array pois o map sempre
+    vai retornar um novo array que inicialmente vai ser vazio.*/
+
+    console.log (contagem);
+}
+
 function verificarPalavras(texto) {
     const listarPalavras = texto.split (' ');
     const resultado = {};
 
     listarPalavras.forEach(palavra => {
         resultado[palavra] = (resultado[palavra] || 0) + 1
-    });
+    })
+
+    return resultado;
 }
 
 /* Split é uma função que divide uma string em um array de palavras
@@ -83,13 +101,14 @@ pela quebra de linha descrita em (' ') pois o parametro recebe um espaço
 ao inves de vazio.
 */
 
-//resultado guarda o resultado em um array com essas chaves.
+//resultado guarda o resultado em uma lista com essas chaves.
+//(resultado [palavra] || 0) significa que iniciará a contagem em 0, o padrao.
 
 /*
 resultado receberá a propriedade 'palavra' ao qual criamos e que vai receber 
 um valor, ou seja a propria palavra do texto que estamos querendo que o readFile 
 leia. Se o valor existir adicionará o valor 'resultado + 1 ou atualizar' o contador
-ou valor que inicialmente começará em 1 dentro da recente propriedade criada,senao 
+ou valor que inicialmente começará em 0 dentro da recente propriedade criada, senao 
 ele cria uma nova propriedade com o nome da nova palavra, pois objetos é o mesmo que 
 lista de cadastro que precisa das propriedades para funcionar e não vai dentro dos colchetes.
 */
