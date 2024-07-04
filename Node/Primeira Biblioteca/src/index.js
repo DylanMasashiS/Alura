@@ -13,15 +13,24 @@ function quebraParagrafos(texto) {
     const contagem = paragrafos.map((paragrafo) => {
         return verificarPalavras(paragrafo);
     })
+
+    console.log (contagem);
+}
+
+function limparPalavras(palavra) {
+    return palavra.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,'');   
 }
 
 function verificarPalavras(texto) {
     const listarPalavras = texto.split (' ');
     const resultado = {};
 
-    verificarPalavras.forEach(palavra => {
-        resultado[palavra] = (resultado[palavra] || 0) + 1
+    listarPalavras.forEach(palavra => {
+        if (palavra.length >= 3) {
+        const palavraLimpa = limparPalavras(palavra);
+        resultado[palavraLimpa] = (resultado[palavraLimpa] || 0) + 1
+        }
     })
 
-    console.log (resultado);
+    return (resultado);
 }

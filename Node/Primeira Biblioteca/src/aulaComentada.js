@@ -85,15 +85,32 @@ function quebraParagrafos(texto) {
     console.log (contagem);
 }
 
+function limparPalavras(palavra) {
+    return palavra.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,''); 
+    //replace() recebe o que queremos limpar e o que queremos que substitua.
+    //g significa global
+}
+
 function verificarPalavras(texto) {
     const listarPalavras = texto.split (' ');
     const resultado = {};
+    //resultado recebe um objeto vazio para guardar as ocorrências
 
     listarPalavras.forEach(palavra => {
-        resultado[palavra] = (resultado[palavra] || 0) + 1
+        if (palavra.length >= 3) {
+        /*palavra.length verifica o tamanho da palavra antes de limpar
+        se for menor ou igual que 3 ele pula para o proximo, assim evitando
+        fazer contagem de palavras muito pequenas como exemplo: 'a'*/
+        const palavraLimpa = limparPalavras(palavra);
+        //palavraLimpa puxa a função limparPalavras e refina as palavras antes de listar
+        resultado[palavraLimpa] = (resultado[palavraLimpa] || 0) + 1
+        /*puxa o resultado e adiciona mais um valor para a palavraLimpa que adiciona valor
+        na variavel palavra.*/
+        }
     })
 
     return resultado;
+    //retorna o resultado para fora para que pode ser usado
 }
 
 /* Split é uma função que divide uma string em um array de palavras
